@@ -1,107 +1,41 @@
-# PCAP Network Attack Detector
+# 🔐 PCAP Network Attack Detector
 
+This project provides an end-to-end machine learning pipeline to detect **network intrusions and attacks** directly from `.pcap` (packet capture) files. It is designed to help automate network forensics by parsing raw network traffic, extracting meaningful features, and classifying it as **BENIGN** or **ATTACK** using a trained **LightGBM** model.
 
+---
 
-Overview
+## 💡 Motivation
 
-This project detects network attacks (e.g., DDoS, PortScan, Bot) from PCAP files using a pre-trained LightGBM model. It parses PCAPs into CSV format, extracts features like source/destination IP, ports, protocol, and packet length, and classifies traffic as BENIGN or ATTACK. Trained on CICIDS2017, NSL-KDD, and TON_IoT datasets, it supports general and IoT-specific attack detection.
+Traditional intrusion detection systems (IDS) often rely on static rule-based engines, which struggle with:
+- High false positive rates
+- Limited adaptability to new attack patterns
+- Inability to analyze large volumes of real-time packet data effectively
 
-# Features
+This project aims to bridge that gap by using **machine learning** to:
+- Automate PCAP parsing and feature extraction
+- Detect evolving threats such as **DDoS, Port Scans, Botnet activity**, etc.
+- Support both general network and **IoT-specific** attack detection
 
-Parses PCAP files with Scapy, supporting protocols: TCP, UDP, HTTP, DNS, TLS, ARP, ICMP, etc.
+---
 
-Extracts features: source/destination IP, ports, protocol, packet length, timestamp.
+## 📚 Datasets Used
 
-Predicts attacks using a pre-trained LightGBM model with encoded IPs and scaled features.
+We trained our model on a combination of well-known benchmark datasets:
 
-Handles class imbalance with SMOTE during training.
+| Dataset     | Description                                                                 | Link |
+|-------------|-----------------------------------------------------------------------------|------|
+| **CICIDS2017** | Modern attacks (DDoS, Brute Force, Botnet, PortScan) with rich feature sets | [CICIDS2017](https://www.unb.ca/cic/datasets/ids-2017.html) |
+| **NSL-KDD**    | Classic IDS dataset with 41 hand-engineered features                       | [NSL-KDD](https://www.unb.ca/cic/datasets/nsl.html) |
+| **TON_IoT**    | IoT-specific intrusion dataset covering DoS, ransomware, injection attacks | [TON_IoT](https://ieee-dataport.org/open-access/toniot-datasets) |
 
-Logs unparsed packets for debugging in ml/unparsed_packets.log.
+---
 
-# Prerequisites
+## ⚙️ Project Workflow
 
-Python 3.8+
-
-# Datasets:
-
-CICIDS2017
-NSL-KDD
-TON_IoT
-
-Project Structure
-
-# Datasets
-
-
-
-
-
-CICIDS2017: Labeled traffic with DDoS, PortScan, Bot attacks. Link
-
-
-
-NSL-KDD: Classic intrusion detection dataset with 41 features. Link
-
-
-
-TON_IoT: IoT-specific dataset with DDoS and other attacks. Link
-
-Citations:
-
-
-
-
-
-CICIDS2017: Sharafaldin, I., et al. (2018). ICISSP.
-
-
-
-NSL-KDD: Tavallaee, M., et al. (2009). IEEE Symposium on Computational Intelligence.
-
-
-
-TON_IoT: Moustafa, N. (2021). IEEE DataPort. doi:10.21227/yjtm-6x74
-
-Notes
-
-
-
-
-
-Ensure PCAP files end with .pcap or .pcapng.
-
-
-
-Verify model and preprocessor files exist in ml/ to avoid FileNotFoundError.
-
-
-
-Align extracted features with training data formats (e.g., CICIDS2017).
-
-
-
-Check ml/unparsed_packets.log for unparsed packet details.
-
-
-
-For large PCAPs, monitor memory usage during parsing.
-
-Contributing
-
-Fork the repo, create a branch, and submit a pull request. See CONTRIBUTING.md for details.
-
-License
-
-MIT License
-
-Acknowledgments
-
-
-
-
-
-Datasets: CICIDS2017, NSL-KDD, TON_IoT
-
-
-
-Libraries: Scapy, pandas, LightGBM, scikit-learn
+```mermaid
+graph LR
+A[Raw PCAP File] --> B[Parse Packets with Scapy]
+B --> C[Extract Features: IPs, Ports, Protocol, Length, Time]
+C --> D[Scale + Encode Features]
+D --> E[LightGBM Model]
+E --> F[Prediction: BENIGN or ATTACK]
