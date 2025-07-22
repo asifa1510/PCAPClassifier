@@ -1,10 +1,10 @@
-# 🔐 PCAP Network Attack Detector
+**PCAP Network Attack Detector**
 
 This project provides an end-to-end machine learning pipeline to detect **network intrusions and attacks** directly from `.pcap` (packet capture) files. It is designed to help automate network forensics by parsing raw network traffic, extracting meaningful features, and classifying it as **BENIGN** or **ATTACK** using a trained **LightGBM** model.
 
 ---
 
-## 💡 Motivation
+**💡 Motivation**
 
 Traditional intrusion detection systems (IDS) often rely on static rule-based engines, which struggle with:
 - High false positive rates
@@ -18,7 +18,7 @@ This project aims to bridge that gap by using **machine learning** to:
 
 ---
 
-## 📚 Datasets Used
+**📚 Datasets Used**
 
 We trained our model on a combination of well-known benchmark datasets:
 
@@ -30,7 +30,7 @@ We trained our model on a combination of well-known benchmark datasets:
 
 ---
 
-## ⚙️ Project Workflow
+**⚙️ Project Workflow**
 
 ```mermaid
 graph LR
